@@ -69,7 +69,7 @@ Is this OK? (yes) Press Enter
 	login in mongodb
 	MONGO_URI=(Your mongo url ) ex: mongodb+srv://<username>:<password>@cluster0.6cyhstq.mongodb.net/?retryWrites=true&w=majority
 
-	JWT_SECRET= (You key )
+	JWT_SECRET= (Your key )
 
     ]
 
