@@ -4,6 +4,7 @@ import { Input, InputGroup } from "@chakra-ui/input";
 import { FormControl, FormLabel } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
+import ForgetPassword from "./ForgetPassword";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
@@ -12,6 +13,7 @@ const Login = () => {
   // const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [showForgetPassword, setShowForgetPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
   const history = useHistory();
@@ -68,56 +70,75 @@ const Login = () => {
     }
   };
 
+  const handleForgetPassword = () => {
+    setShowForgetPassword(true); // Show the ForgetPassword component when the button is clicked
+  };
+
   return (
     <VStack spacing="5px" color="black">
-      <FormControl id="email" isRequired>
-        <FormLabel>Email</FormLabel>
-        <Input
-          placeholder="Enter Your Email "
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </FormControl>
+      {showForgetPassword ? (
+        <ForgetPassword /> // Render the ForgetPassword component when showForgetPassword is true
+      ) : (
+        <>
+          <FormControl id="email" isRequired>
+            <FormLabel>Email</FormLabel>
+            <Input
+              placeholder="Enter Your Email "
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </FormControl>
 
-      <FormControl id="password" isRequired>
-        <FormLabel>Password</FormLabel>
-        <InputGroup>
-          <Input
-            type={show ? " text" : "password"}
-            placeholder="Enter Your Password "
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <InputRightElement width="4.5rem">
-            <Button h="1.75" size="sm" onClick={handleClick}>
-              {show ? "Hide" : "Show"}
+          <FormControl id="password" isRequired>
+            <FormLabel>Password</FormLabel>
+            <InputGroup>
+              <Input
+                type={show ? " text" : "password"}
+                placeholder="Enter Your Password "
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <InputRightElement width="4.5rem">
+                <Button h="1.75" size="sm" onClick={handleClick}>
+                  {show ? "Hide" : "Show"}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+            <Button
+              variant="link"
+              colorScheme="blue"
+              // width="100%"
+              style={{ marginTop: 15 }}
+              onClick={handleForgetPassword}
+            >
+              Forget Password?
             </Button>
-          </InputRightElement>
-        </InputGroup>
-      </FormControl>
+          </FormControl>
 
-      <Button
-        colorScheme="blue"
-        width="100%"
-        style={{ marginTop: 15 }}
-        onClick={submitHandler}
-        isLoading={loading}
-      >
-        Login
-      </Button>
+          <Button
+            colorScheme="blue"
+            width="100%"
+            style={{ marginTop: 15 }}
+            onClick={submitHandler}
+            isLoading={loading}
+          >
+            Login
+          </Button>
 
-      <Button
-        variant="solid"
-        colorScheme="red"
-        width="100%"
-        // style={{ marginTop: 15 }}
-        onClick={() => {
-          setEmail("guest@gmail.com");
-          setPassword("123456");
-        }}
-      >
-        Get Guest User Credentials!
-      </Button>
+          <Button
+            variant="solid"
+            colorScheme="red"
+            width="100%"
+            // style={{ marginTop: 15 }}
+            onClick={() => {
+              setEmail("guest@gmail.com");
+              setPassword("123456");
+            }}
+          >
+            Get Guest User Credentials!
+          </Button>
+        </>
+      )}
     </VStack>
   );
 };

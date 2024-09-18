@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 
 const SignUp = () => {
   const [show, setShow] = useState(false);
+  const [showconfirm, setShowConfirm] = useState(false);
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [confirmpassword, setConfirmPassword] = useState();
@@ -19,7 +20,7 @@ const SignUp = () => {
   const history = useHistory();
 
   const handleClick = () => setShow(!show);
-
+  const handleClickConfirm = () => setShowConfirm(!showconfirm);
   const submitHandler = async () => {
     setLoading(true);
     if (!name || !email || !password || !confirmpassword) {
@@ -55,7 +56,7 @@ const SignUp = () => {
       });
       return;
     }
-    
+
     try {
       const config = {
         headers: {
@@ -64,7 +65,7 @@ const SignUp = () => {
       };
       const { data } = await axios.post(
         "/api/user",
-        { name, email, password},
+        { name, email, password },
         config
       );
       toast({
@@ -184,13 +185,13 @@ const SignUp = () => {
         <FormLabel>Confirm Password</FormLabel>
         <InputGroup>
           <Input
-            type={show ? " text" : "password"}
+            type={showconfirm ? " text" : "password"}
             placeholder="Enter Your Confirm Password "
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
           <InputRightElement width="4.5rem">
-            <Button h="1.75" size="sm" onClick={handleClick}>
-              {show ? "Hide" : "Show"}
+            <Button h="1.75" size="sm" onClick={handleClickConfirm}>
+              {showconfirm ? "Hide" : "Show"}
             </Button>
           </InputRightElement>
         </InputGroup>
